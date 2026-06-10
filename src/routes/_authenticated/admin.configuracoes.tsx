@@ -19,7 +19,7 @@ function AdminConfig() {
       const payload = { ...form };
       delete payload.id; delete payload.updated_at;
       const cleaned = Object.fromEntries(Object.entries(payload).map(([k, v]) => [k, v === "" ? null : v]));
-      const { error } = await supabase.from("site_settings").update(cleaned).eq("id", 1);
+      const { error } = await supabase.from("site_settings").update(cleaned as never).eq("id", 1);
       if (error) throw error;
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["site_settings"] }); toast.success("Configurações salvas!"); },
