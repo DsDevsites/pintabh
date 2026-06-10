@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Instagram, Facebook, Mail, Phone, MapPin, Clock } from "lucide-react";
+import { Instagram, Facebook, Mail, Phone, MapPin, Clock, Settings } from "lucide-react";
 import { settingsQuery } from "@/lib/queries";
 import { RainbowStrip } from "./RainbowStrip";
 import logoAsset from "@/assets/pintarbh-logo.png.asset.json";
@@ -62,7 +62,14 @@ export function SiteFooter() {
       <div className="border-t border-border">
         <div className="mx-auto max-w-7xl px-6 lg:px-10 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
           <span>© {new Date().getFullYear()} {s?.company_name || "PintarBH"}. Todos os direitos reservados.</span>
-          <Link to="/auth" className="hover:text-foreground">Área administrativa</Link>
+          <Link
+  to="/auth"
+  className="opacity-50 hover:opacity-100 transition-all duration-300"
+  aria-label="Painel Administrativo"
+  title="Painel Administrativo"
+>
+  <Settings className="h-5 w-5" />
+</Link>
         </div>
       </div>
     </footer>
