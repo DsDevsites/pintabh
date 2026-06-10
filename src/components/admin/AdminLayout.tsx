@@ -126,9 +126,7 @@ export function AdminLayout({ children, title }: { children: ReactNode; title: s
     </div>
   </div>
 )}
-          <h1 className="font-display text-2xl">{title}</h1>
-          <Link to="/" className="text-sm text-muted-foreground hover:text-foreground">Ver site →</Link>
-        </header>
+      
         <div className="p-6 lg:p-10">{children}</div>
       </main>
     </div>
