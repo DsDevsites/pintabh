@@ -6,14 +6,15 @@ import { RainbowStrip } from "@/components/site/RainbowStrip";
 import logoAsset from "@/assets/pintarbh-logo.png.asset.json";
 import { useQueryClient } from "@tanstack/react-query";
 
-const nav = [
+type NavItem = { to: string; label: string; icon: typeof LayoutDashboard; exact?: boolean };
+const nav: NavItem[] = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/admin/servicos", label: "Serviços", icon: Wrench },
   { to: "/admin/projetos", label: "Projetos", icon: ImageIcon },
   { to: "/admin/depoimentos", label: "Depoimentos", icon: Star },
   { to: "/admin/contatos", label: "Contatos", icon: MessageSquare },
   { to: "/admin/configuracoes", label: "Configurações", icon: Settings },
-] as const;
+];
 
 export function AdminLayout({ children, title }: { children: ReactNode; title: string }) {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ export function AdminLayout({ children, title }: { children: ReactNode; title: s
             return (
               <Link
                 key={n.to}
-                to={n.to}
+                to={n.to as "/admin"}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm mb-1 transition ${active ? "bg-primary text-primary-foreground" : "hover:bg-muted"}`}
               >
                 <n.icon className="h-4 w-4" />
