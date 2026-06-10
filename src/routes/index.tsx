@@ -56,17 +56,24 @@ function Index() {
                 Ver trabalhos
               </Link>
             </div>
-            <div className="mt-12 flex items-center gap-8 text-sm text-muted-foreground">
-              <div>
-                <div className="font-display text-2xl text-foreground">+500</div>
-                projetos entregues
-              </div>
-              <div className="h-10 w-px bg-border" />
-              <div>
-                <div className="font-display text-2xl text-foreground">15 anos</div>
-                de experiência
-              </div>
-            </div>
+           <div className="mt-12 flex items-center gap-8 text-sm text-muted-foreground">
+  <div>
+    <div className="text-2xl text-foreground font-bold font-sans">
+      +500
+    </div>
+    projetos entregues
+  </div>
+
+  <div className="h-10 w-px bg-border" />
+
+  <div>
+    <div className="text-2xl text-foreground">
+      <span className="font-bold font-sans">15</span>
+      <span className="font-display ml-1">anos</span>
+    </div>
+    de experiência
+  </div>
+</div>
           </div>
           <div className="relative">
             <div className="aspect-[4/5] rounded-3xl overflow-hidden ring-1 ring-border shadow-xl">
