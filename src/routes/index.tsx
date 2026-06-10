@@ -67,10 +67,9 @@ function Index() {
   <div className="h-10 w-px bg-border" />
 
   <div>
-    <div className="text-2xl text-foreground">
-      <span className="font-bold font-sans">15</span>
-      <span className="font-display ml-1">anos</span>
-    </div>
+    <div className="text-2xl text-foreground font-bold font-sans">
+  15 anos
+</div>
     de experiência
   </div>
 </div>
