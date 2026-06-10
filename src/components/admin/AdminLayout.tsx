@@ -1,6 +1,7 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { LayoutDashboard, Settings, Wrench, Image as ImageIcon, MessageSquare, Star, LogOut } from "lucide-react";
+import { LayoutDashboard, Settings, Wrench, Image as ImageIcon, MessageSquare, Star, LogOut, Menu, X } from "lucide-react";
+import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { RainbowStrip } from "@/components/site/RainbowStrip";
 import logoAsset from "@/assets/pintarbh-logo.png.asset.json";
@@ -20,6 +21,7 @@ export function AdminLayout({ children, title }: { children: ReactNode; title: s
   const navigate = useNavigate();
   const qc = useQueryClient();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const [menuOpen, setMenuOpen] = useState(false);
 
   async function handleLogout() {
     await qc.cancelQueries();
@@ -62,6 +64,68 @@ export function AdminLayout({ children, title }: { children: ReactNode; title: s
       </aside>
       <main className="flex-1 min-w-0">
         <header className="bg-background border-b border-border px-6 lg:px-10 py-5 flex items-center justify-between">
+  <div className="flex items-center gap-4">
+    <button
+      onClick={() => setMenuOpen(true)}
+      className="lg:hidden"
+    >
+      <Menu className="h-6 w-6" />
+    </button>
+
+    <h1 className="font-display text-2xl">{title}</h1>
+  </div>
+
+  <Link
+    to="/"
+    className="text-sm text-muted-foreground hover:text-foreground"
+  >
+    Ver site →
+  </Link>
+</header>
+{menuOpen && (
+  <div className="fixed inset-0 z-50 lg:hidden">
+    <div
+      className="absolute inset-0 bg-black/50"
+      onClick={() => setMenuOpen(false)}
+    />
+
+    <div className="absolute left-0 top-0 h-full w-72 bg-background border-r border-border">
+      <div className="flex items-center justify-between p-4 border-b border-border">
+        <span className="font-display text-lg">
+          Administração
+        </span>
+
+        <button onClick={() => setMenuOpen(false)}>
+          <X className="h-5 w-5" />
+        </button>
+      </div>
+
+      <nav className="p-3">
+        {nav.map((n) => {
+          const active = n.exact
+            ? pathname === n.to
+            : pathname.startsWith(n.to);
+
+          return (
+            <Link
+              key={n.to}
+              to={n.to as "/admin"}
+              onClick={() => setMenuOpen(false)}
+              className={`flex items-center gap-3 px-3 py-3 rounded-xl text-sm mb-1 ${
+                active
+                  ? "bg-primary text-primary-foreground"
+                  : "hover:bg-muted"
+              }`}
+            >
+              <n.icon className="h-4 w-4" />
+              {n.label}
+            </Link>
+          );
+        })}
+      </nav>
+    </div>
+  </div>
+)}
           <h1 className="font-display text-2xl">{title}</h1>
           <Link to="/" className="text-sm text-muted-foreground hover:text-foreground">Ver site →</Link>
         </header>
