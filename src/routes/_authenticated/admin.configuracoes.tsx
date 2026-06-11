@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Save } from "lucide-react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { supabase } from "@/integrations/supabase/client";
 import { settingsQuery } from "@/lib/queries";
 
@@ -46,7 +47,7 @@ function AdminConfig() {
     { title: "Home", fields: [
       { key: "hero_title", label: "Título principal" },
       { key: "hero_subtitle", label: "Subtítulo", type: "textarea" },
-      { key: "hero_image_url", label: "Imagem do banner (URL)" },
+      { key: "hero_image_url", label: "Imagem do banner", type: "image" },
     ]},
     { title: "Sobre", fields: [
       { key: "about_history", label: "História", type: "textarea" },
@@ -76,7 +77,21 @@ function AdminConfig() {
               {g.fields.map((f) => (
                 <div key={f.key}>
                   <label className="text-xs uppercase tracking-widest text-muted-foreground mb-1.5 block">{f.label}</label>
-                  {f.type === "textarea" ? (
+                  {f.type === "image" ? (
+                    <ImageUpload
+                      value={form[f.key] ?? ""}
+                      onChange={(url) => {
+                        const next = { ...form, [f.key]: url };
+                        setForm(next);
+                        const payload: Record<string, string | null> = { [f.key]: url === "" ? null : url };
+                        supabase.from("site_settings").update(payload as never).eq("id", 1).then(({ error }) => {
+                          if (error) toast.error(error.message);
+                          else qc.invalidateQueries({ queryKey: ["site_settings"] });
+                        });
+                      }}
+                      folder={f.key}
+                    />
+                  ) : f.type === "textarea" ? (
                     <textarea rows={3} value={form[f.key] ?? ""} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} className="w-full rounded-xl border border-border px-4 py-3 text-sm" />
                   ) : (
                     <input value={form[f.key] ?? ""} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} className="w-full rounded-xl border border-border px-4 py-3 text-sm" />
