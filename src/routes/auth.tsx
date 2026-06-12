@@ -28,27 +28,31 @@ function AuthPage() {
   }, [navigate]);
 
 async function handleLogin(e: React.FormEvent) {
-e.preventDefault();
+  e.preventDefault();
 
-setLoading(true);
-try {
-  if (
-    user === "admin" &&
-    password === "pintarbh26@"
-  ) {
-    localStorage.setItem("admin-auth", "true");
-    toast.success("Bem-vindo!");
-    navigate({
-      to: "/admin",
-      replace: true,
-    });
-    return;
+  setLoading(true);
+
+  try {
+    if (
+      email === "admin" &&
+      password === "pintarbh26@"
+    ) {
+      localStorage.setItem("admin-auth", "true");
+
+      toast.success("Bem-vindo!");
+
+      navigate({
+        to: "/admin",
+        replace: true,
+      });
+
+      return;
+    }
+
+    toast.error("Usuário ou senha inválidos");
+  } finally {
+    setLoading(false);
   }
-  toast.error("Usuário ou senha inválidos");
-} finally {
-  setLoading(false);
-}
-
 }
 
 return (
@@ -83,12 +87,12 @@ return (
               Usuário
             </label>
             <input
-              type="text"
-              required
-              value={user}
-              onChange={(e) => setUser(e.target.value)}
-              className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-            />
+  type="text"
+  required
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+/>
           </div>
           <div>
             <label className="text-xs uppercase tracking-widest text-muted-foreground mb-1.5 block">
