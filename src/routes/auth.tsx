@@ -13,23 +13,19 @@ ssr: false,
 });
 
 function AuthPage() {
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-const [user, setUser] = useState("");
-const [password, setPassword] = useState("");
-const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-useEffect(() => {
-const isAuth = localStorage.getItem("admin-auth");
+  useEffect(() => {
+    const isAuth = localStorage.getItem("admin-auth");
 
-if (isAuth === "true") {
-  navigate({
-    to: "/admin",
-    replace: true,
-  });
-}
-
-}, [navigate]);
+    if (isAuth === "true") {
+      navigate({ to: "/admin", replace: true });
+    }
+  }, [navigate]);
 
 async function handleLogin(e: React.FormEvent) {
 e.preventDefault();
