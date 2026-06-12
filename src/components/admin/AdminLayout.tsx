@@ -2,7 +2,6 @@ import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { LayoutDashboard, Settings, Wrench, Image as ImageIcon, MessageSquare, Star, LogOut, Menu, X, Users } from "lucide-react";
 import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { RainbowStrip } from "@/components/site/RainbowStrip";
 import logoAsset from "@/assets/pintarbh-logo.png.asset.json";
 import { useQueryClient } from "@tanstack/react-query";
@@ -24,12 +23,16 @@ export function AdminLayout({ children, title }: { children: ReactNode; title: s
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [menuOpen, setMenuOpen] = useState(false);
 
-  async function handleLogout() {
-    await qc.cancelQueries();
-    qc.clear();
-    await supabase.auth.signOut();
-    navigate({ to: "/auth", replace: true });
-  }
+  function handleLogout() {
+  localStorage.removeItem("admin-auth");
+
+  qc.clear();
+
+  navigate({
+    to: "/auth",
+    replace: true,
+  });
+}
 
   return (
     <div className="min-h-screen flex bg-muted/30">
