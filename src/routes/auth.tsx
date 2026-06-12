@@ -1,12 +1,12 @@
-import { createFileRoute, useNavigate, Link } from “@tanstack/react-router”;
-import { useEffect, useState } from “react”;
-import { toast } from “sonner”;
-import { RainbowStrip } from “@/components/site/RainbowStrip”;
-import logoAsset from “@/assets/pintarbh-logo.png.asset.json”;
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { RainbowStrip } from "@/components/site/RainbowStrip";
+import logoAsset from "@/assets/pintarbh-logo.png.asset.json";
 
-export const Route = createFileRoute(”/auth”)({
+export const Route = createFileRoute("/auth")({
 head: () => ({
-meta: [{ title: “Acesso administrativo — PintarBH” }],
+meta: [{ title: "Acesso administrativo — PintarBH" }],
 }),
 component: AuthPage,
 ssr: false,
@@ -15,12 +15,12 @@ ssr: false,
 function AuthPage() {
 const navigate = useNavigate();
 
-const [user, setUser] = useState(””);
-const [password, setPassword] = useState(””);
+const [user, setUser] = useState("");
+const [password, setPassword] = useState("");
 const [loading, setLoading] = useState(false);
 
 useEffect(() => {
-const isAuth = localStorage.getItem(“admin-auth”);
+const isAuth = localStorage.getItem("admin-auth");
 
 if (isAuth === "true") {
   navigate({
