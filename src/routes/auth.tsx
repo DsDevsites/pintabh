@@ -56,8 +56,9 @@ async function handleLogin(e: React.FormEvent) {
 }
 
 return (
-  <div className="flex-1 grid place-items-center px-6 py-16">
-    <div className="w-full max-w-md">
+  <div className="min-h-screen flex flex-col">
+    <RainbowStrip />
+    <div className="flex-1 grid place-items-center px-6 py-16">
       <Link
         to="/"
         className="flex items-center gap-3 mb-8 justify-center"
