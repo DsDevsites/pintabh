@@ -12,6 +12,10 @@ export const Route = createFileRoute("/_authenticated")({
       .select("role")
       .eq("user_id", data.user.id);
     const isAdmin = roles?.some((r) => r.role === "admin") ?? false;
+    if (!isAdmin) {
+      await supabase.auth.signOut();
+      throw redirect({ to: "/auth" });
+    }
     return { user: data.user, isAdmin };
   },
   component: () => <Outlet />,

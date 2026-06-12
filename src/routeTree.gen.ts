@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as ServicosRouteImport } from './routes/servicos'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as DepoimentosRouteImport } from './routes/depoimentos'
 import { Route as ContatoRouteImport } from './routes/contato'
@@ -20,6 +21,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as PortfolioSlugRouteImport } from './routes/portfolio.$slug'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminUsuariosRouteImport } from './routes/_authenticated/admin.usuarios'
 import { Route as AuthenticatedAdminServicosRouteImport } from './routes/_authenticated/admin.servicos'
 import { Route as AuthenticatedAdminProjetosRouteImport } from './routes/_authenticated/admin.projetos'
 import { Route as AuthenticatedAdminDepoimentosRouteImport } from './routes/_authenticated/admin.depoimentos'
@@ -34,6 +36,11 @@ const SobreRoute = SobreRouteImport.update({
 const ServicosRoute = ServicosRouteImport.update({
   id: '/servicos',
   path: '/servicos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PortfolioRoute = PortfolioRouteImport.update({
@@ -80,6 +87,12 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminUsuariosRoute =
+  AuthenticatedAdminUsuariosRouteImport.update({
+    id: '/usuarios',
+    path: '/usuarios',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminServicosRoute =
   AuthenticatedAdminServicosRouteImport.update({
     id: '/servicos',
@@ -117,6 +130,7 @@ export interface FileRoutesByFullPath {
   '/contato': typeof ContatoRoute
   '/depoimentos': typeof DepoimentosRoute
   '/portfolio': typeof PortfolioRouteWithChildren
+  '/reset-password': typeof ResetPasswordRoute
   '/servicos': typeof ServicosRoute
   '/sobre': typeof SobreRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
@@ -126,6 +140,7 @@ export interface FileRoutesByFullPath {
   '/admin/depoimentos': typeof AuthenticatedAdminDepoimentosRoute
   '/admin/projetos': typeof AuthenticatedAdminProjetosRoute
   '/admin/servicos': typeof AuthenticatedAdminServicosRoute
+  '/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesByTo {
@@ -134,6 +149,7 @@ export interface FileRoutesByTo {
   '/contato': typeof ContatoRoute
   '/depoimentos': typeof DepoimentosRoute
   '/portfolio': typeof PortfolioRouteWithChildren
+  '/reset-password': typeof ResetPasswordRoute
   '/servicos': typeof ServicosRoute
   '/sobre': typeof SobreRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
@@ -142,6 +158,7 @@ export interface FileRoutesByTo {
   '/admin/depoimentos': typeof AuthenticatedAdminDepoimentosRoute
   '/admin/projetos': typeof AuthenticatedAdminProjetosRoute
   '/admin/servicos': typeof AuthenticatedAdminServicosRoute
+  '/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesById {
@@ -152,6 +169,7 @@ export interface FileRoutesById {
   '/contato': typeof ContatoRoute
   '/depoimentos': typeof DepoimentosRoute
   '/portfolio': typeof PortfolioRouteWithChildren
+  '/reset-password': typeof ResetPasswordRoute
   '/servicos': typeof ServicosRoute
   '/sobre': typeof SobreRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
@@ -161,6 +179,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/depoimentos': typeof AuthenticatedAdminDepoimentosRoute
   '/_authenticated/admin/projetos': typeof AuthenticatedAdminProjetosRoute
   '/_authenticated/admin/servicos': typeof AuthenticatedAdminServicosRoute
+  '/_authenticated/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRouteTypes {
@@ -171,6 +190,7 @@ export interface FileRouteTypes {
     | '/contato'
     | '/depoimentos'
     | '/portfolio'
+    | '/reset-password'
     | '/servicos'
     | '/sobre'
     | '/admin'
@@ -180,6 +200,7 @@ export interface FileRouteTypes {
     | '/admin/depoimentos'
     | '/admin/projetos'
     | '/admin/servicos'
+    | '/admin/usuarios'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -188,6 +209,7 @@ export interface FileRouteTypes {
     | '/contato'
     | '/depoimentos'
     | '/portfolio'
+    | '/reset-password'
     | '/servicos'
     | '/sobre'
     | '/portfolio/$slug'
@@ -196,6 +218,7 @@ export interface FileRouteTypes {
     | '/admin/depoimentos'
     | '/admin/projetos'
     | '/admin/servicos'
+    | '/admin/usuarios'
     | '/admin'
   id:
     | '__root__'
@@ -205,6 +228,7 @@ export interface FileRouteTypes {
     | '/contato'
     | '/depoimentos'
     | '/portfolio'
+    | '/reset-password'
     | '/servicos'
     | '/sobre'
     | '/_authenticated/admin'
@@ -214,6 +238,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/depoimentos'
     | '/_authenticated/admin/projetos'
     | '/_authenticated/admin/servicos'
+    | '/_authenticated/admin/usuarios'
     | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
 }
@@ -224,6 +249,7 @@ export interface RootRouteChildren {
   ContatoRoute: typeof ContatoRoute
   DepoimentosRoute: typeof DepoimentosRoute
   PortfolioRoute: typeof PortfolioRouteWithChildren
+  ResetPasswordRoute: typeof ResetPasswordRoute
   ServicosRoute: typeof ServicosRoute
   SobreRoute: typeof SobreRoute
 }
@@ -242,6 +268,13 @@ declare module '@tanstack/react-router' {
       path: '/servicos'
       fullPath: '/servicos'
       preLoaderRoute: typeof ServicosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/portfolio': {
@@ -307,6 +340,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/usuarios': {
+      id: '/_authenticated/admin/usuarios'
+      path: '/usuarios'
+      fullPath: '/admin/usuarios'
+      preLoaderRoute: typeof AuthenticatedAdminUsuariosRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/servicos': {
       id: '/_authenticated/admin/servicos'
       path: '/servicos'
@@ -351,6 +391,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminDepoimentosRoute: typeof AuthenticatedAdminDepoimentosRoute
   AuthenticatedAdminProjetosRoute: typeof AuthenticatedAdminProjetosRoute
   AuthenticatedAdminServicosRoute: typeof AuthenticatedAdminServicosRoute
+  AuthenticatedAdminUsuariosRoute: typeof AuthenticatedAdminUsuariosRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
@@ -360,6 +401,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminDepoimentosRoute: AuthenticatedAdminDepoimentosRoute,
   AuthenticatedAdminProjetosRoute: AuthenticatedAdminProjetosRoute,
   AuthenticatedAdminServicosRoute: AuthenticatedAdminServicosRoute,
+  AuthenticatedAdminUsuariosRoute: AuthenticatedAdminUsuariosRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
@@ -396,6 +438,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContatoRoute: ContatoRoute,
   DepoimentosRoute: DepoimentosRoute,
   PortfolioRoute: PortfolioRouteWithChildren,
+  ResetPasswordRoute: ResetPasswordRoute,
   ServicosRoute: ServicosRoute,
   SobreRoute: SobreRoute,
 }
