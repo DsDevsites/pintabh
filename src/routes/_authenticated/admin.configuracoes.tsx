@@ -31,9 +31,9 @@ function AdminConfig() {
     { title: "Identidade", fields: [
       { key: "company_name", label: "Nome da empresa" },
       { key: "slogan", label: "Slogan" },
-      { key: "logo_url", label: "URL Logo principal" },
-      { key: "logo_secondary_url", label: "URL Logo secundária" },
-      { key: "favicon_url", label: "URL Favicon" },
+      { key: "logo_url", label: "Logo principal", type: "image" },
+      { key: "logo_secondary_url", label: "Logo secundária", type: "image" },
+      { key: "favicon_url", label: "Favicon", type: "image" },
     ]},
     { title: "Contato", fields: [
       { key: "phone", label: "Telefone" },
@@ -59,7 +59,7 @@ function AdminConfig() {
       { key: "seo_title", label: "Meta Title" },
       { key: "seo_description", label: "Meta Description", type: "textarea" },
       { key: "seo_keywords", label: "Keywords" },
-      { key: "og_image_url", label: "Open Graph Image URL" },
+      { key: "og_image_url", label: "Imagem Open Graph", type: "image" },
     ]},
     { title: "Rodapé / Cores", fields: [
       { key: "footer_text", label: "Texto do rodapé" },
