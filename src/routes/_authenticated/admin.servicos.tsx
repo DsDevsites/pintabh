@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Plus, Trash2, Pencil, Save, X } from "lucide-react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/admin/servicos")({ component: AdminServicos });
@@ -47,8 +48,8 @@ function AdminServicos() {
   return (
     <AdminLayout title="Serviços">
       <button onClick={() => setEditing({ ...empty })} className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm text-primary-foreground mb-6"><Plus className="h-4 w-4" /> Novo serviço</button>
-      <div className="rounded-3xl bg-background ring-1 ring-border overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="rounded-3xl bg-background ring-1 ring-border overflow-x-auto">
+        <table className="w-full text-sm min-w-[600px]">
           <thead className="bg-muted/50 text-left">
             <tr><th className="p-4">Título</th><th className="p-4">Slug</th><th className="p-4">Ordem</th><th className="p-4">Ativo</th><th className="p-4"></th></tr>
           </thead>
@@ -59,9 +60,9 @@ function AdminServicos() {
                 <td className="p-4 text-muted-foreground">{s.slug}</td>
                 <td className="p-4">{s.sort_order}</td>
                 <td className="p-4">{s.is_active ? "Sim" : "Não"}</td>
-                <td className="p-4 text-right">
+                <td className="p-4 text-right whitespace-nowrap">
                   <button onClick={() => setEditing(s as Service)} className="p-2 hover:bg-muted rounded-lg"><Pencil className="h-4 w-4" /></button>
-                  <button onClick={() => { if (confirm("Excluir?")) del.mutate(s.id); }} className="p-2 hover:bg-muted rounded-lg ml-2"><Trash2 className="h-4 w-4" /></button>
+                  <button onClick={() => { if (confirm("Excluir?")) del.mutate(s.id!); }} className="p-2 hover:bg-muted rounded-lg ml-2"><Trash2 className="h-4 w-4" /></button>
                 </td>
               </tr>
             ))}
@@ -70,7 +71,7 @@ function AdminServicos() {
       </div>
       {editing && (
         <div className="fixed inset-0 bg-black/40 grid place-items-center p-4 z-50" onClick={() => setEditing(null)}>
-          <div className="bg-background rounded-3xl p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-background rounded-3xl p-6 sm:p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-6">
               <h2 className="font-display text-2xl">{editing.id ? "Editar" : "Novo"} serviço</h2>
               <button onClick={() => setEditing(null)}><X className="h-5 w-5" /></button>
@@ -83,7 +84,10 @@ function AdminServicos() {
                 <label className="text-xs uppercase tracking-widest text-muted-foreground mb-1.5 block">Descrição completa</label>
                 <textarea rows={4} value={editing.description ?? ""} onChange={(e) => setEditing({ ...editing, description: e.target.value })} className="w-full rounded-xl border border-border px-4 py-3 text-sm" />
               </div>
-              <Input label="URL da imagem" value={editing.image_url ?? ""} onChange={(v) => setEditing({ ...editing, image_url: v })} />
+              <div>
+                <label className="text-xs uppercase tracking-widest text-muted-foreground mb-1.5 block">Imagem</label>
+                <ImageUpload value={editing.image_url ?? ""} onChange={(url) => setEditing({ ...editing, image_url: url })} folder="services" />
+              </div>
               <div className="grid grid-cols-2 gap-4">
                 <Input label="Ordem" type="number" value={String(editing.sort_order)} onChange={(v) => setEditing({ ...editing, sort_order: Number(v) })} />
                 <label className="flex items-center gap-2 mt-6"><input type="checkbox" checked={editing.is_active} onChange={(e) => setEditing({ ...editing, is_active: e.target.checked })} /> Ativo</label>

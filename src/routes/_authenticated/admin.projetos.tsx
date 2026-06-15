@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Plus, Trash2, Pencil, X, Save, Image as ImageIcon } from "lucide-react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/admin/projetos")({ component: AdminProjetos });
@@ -45,7 +46,7 @@ function AdminProjetos() {
   return (
     <AdminLayout title="Projetos">
       <button onClick={() => setEditing({ ...empty })} className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm text-primary-foreground mb-6"><Plus className="h-4 w-4" /> Novo projeto</button>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {data?.map((p) => (
           <div key={p.id} className="rounded-3xl bg-background ring-1 ring-border overflow-hidden">
             <div className="aspect-[4/3] bg-muted overflow-hidden">{p.cover_image_url && <img src={p.cover_image_url} alt="" className="h-full w-full object-cover" />}</div>
@@ -72,7 +73,7 @@ function ProjectModal({ project, onClose, onSave, saving }: { project: Project; 
   const [p, setP] = useState(project);
   return (
     <div className="fixed inset-0 bg-black/40 grid place-items-center p-4 z-50" onClick={onClose}>
-      <div className="bg-background rounded-3xl p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+      <div className="bg-background rounded-3xl p-6 sm:p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-6">
           <h2 className="font-display text-2xl">{p.id ? "Editar" : "Novo"} projeto</h2>
           <button onClick={onClose}><X className="h-5 w-5" /></button>
@@ -96,7 +97,10 @@ function ProjectModal({ project, onClose, onSave, saving }: { project: Project; 
             <label className="text-xs uppercase tracking-widest text-muted-foreground mb-1.5 block">Descrição completa</label>
             <textarea rows={4} value={p.description ?? ""} onChange={(e) => setP({ ...p, description: e.target.value })} className="w-full rounded-xl border border-border px-4 py-3 text-sm" />
           </div>
-          <Field label="URL imagem de capa" value={p.cover_image_url ?? ""} onChange={(v) => setP({ ...p, cover_image_url: v })} />
+          <div>
+            <label className="text-xs uppercase tracking-widest text-muted-foreground mb-1.5 block">Imagem de capa</label>
+            <ImageUpload value={p.cover_image_url ?? ""} onChange={(url) => setP({ ...p, cover_image_url: url })} folder="projects" />
+          </div>
           <div className="grid grid-cols-2 gap-4">
             <Field label="Data (YYYY-MM-DD)" value={p.project_date ?? ""} onChange={(v) => setP({ ...p, project_date: v || null })} />
             <Field label="Serviços executados" value={p.services_done ?? ""} onChange={(v) => setP({ ...p, services_done: v })} />
@@ -114,7 +118,6 @@ function ProjectModal({ project, onClose, onSave, saving }: { project: Project; 
 
 function ImagesModal({ projectId, onClose }: { projectId: string; onClose: () => void }) {
   const qc = useQueryClient();
-  const [url, setUrl] = useState("");
   const [caption, setCaption] = useState("");
   const { data } = useQuery({
     queryKey: ["admin", "project_images", projectId],
@@ -125,8 +128,9 @@ function ImagesModal({ projectId, onClose }: { projectId: string; onClose: () =>
     },
   });
   const add = useMutation({
-    mutationFn: async () => { const { error } = await supabase.from("project_images").insert({ project_id: projectId, image_url: url, caption: caption || null }); if (error) throw error; },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin", "project_images", projectId] }); setUrl(""); setCaption(""); toast.success("Imagem adicionada"); },
+    mutationFn: async (url: string) => { const { error } = await supabase.from("project_images").insert({ project_id: projectId, image_url: url, caption: caption || null }); if (error) throw error; },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin", "project_images", projectId] }); setCaption(""); toast.success("Imagem adicionada"); },
+    onError: (e: Error) => toast.error(e.message),
   });
   const remove = useMutation({
     mutationFn: async (id: string) => { const { error } = await supabase.from("project_images").delete().eq("id", id); if (error) throw error; },
@@ -134,15 +138,20 @@ function ImagesModal({ projectId, onClose }: { projectId: string; onClose: () =>
   });
   return (
     <div className="fixed inset-0 bg-black/40 grid place-items-center p-4 z-50" onClick={onClose}>
-      <div className="bg-background rounded-3xl p-8 w-full max-w-3xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+      <div className="bg-background rounded-3xl p-6 sm:p-8 w-full max-w-3xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-6">
           <h2 className="font-display text-2xl">Galeria do projeto</h2>
           <button onClick={onClose}><X className="h-5 w-5" /></button>
         </div>
-        <div className="flex gap-2 mb-6">
-          <input placeholder="URL da imagem" value={url} onChange={(e) => setUrl(e.target.value)} className="flex-1 rounded-xl border border-border px-4 py-3 text-sm" />
-          <input placeholder="Legenda" value={caption} onChange={(e) => setCaption(e.target.value)} className="w-48 rounded-xl border border-border px-4 py-3 text-sm" />
-          <button onClick={() => url && add.mutate()} className="rounded-full bg-primary px-4 text-sm text-primary-foreground"><Plus className="h-4 w-4" /></button>
+        <div className="space-y-3 mb-6 rounded-2xl bg-muted/40 p-4">
+          <input
+            placeholder="Legenda (opcional)"
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
+            className="w-full rounded-xl border border-border px-4 py-3 text-sm bg-background"
+          />
+          <ImageUpload value="" onChange={(url) => url && add.mutate(url)} folder={`projects/${projectId}`} />
+          <p className="text-xs text-muted-foreground">A imagem é adicionada à galeria assim que o upload conclui.</p>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           {data?.map((img) => (

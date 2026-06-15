@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Plus, Trash2, Pencil, X, Save } from "lucide-react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/admin/depoimentos")({ component: AdminDepoimentos });
@@ -25,6 +26,7 @@ function AdminDepoimentos() {
       else { const { error } = await supabase.from("testimonials").insert(payload); if (error) throw error; }
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin", "testimonials"] }); qc.invalidateQueries({ queryKey: ["testimonials"] }); toast.success("Salvo"); setEditing(null); },
+    onError: (e: Error) => toast.error(e.message),
   });
   const del = useMutation({
     mutationFn: async (id: string) => { const { error } = await supabase.from("testimonials").delete().eq("id", id); if (error) throw error; },
@@ -42,7 +44,7 @@ function AdminDepoimentos() {
               <div><div className="font-medium">{t.client_name}</div><div className="text-xs text-muted-foreground">{t.city}</div></div>
               <div>
                 <button onClick={() => setEditing(t as T)} className="p-2 hover:bg-muted rounded-lg"><Pencil className="h-4 w-4" /></button>
-                <button onClick={() => { if (confirm("Excluir?")) del.mutate(t.id); }} className="p-2 hover:bg-muted rounded-lg"><Trash2 className="h-4 w-4" /></button>
+                <button onClick={() => { if (confirm("Excluir?")) del.mutate(t.id!); }} className="p-2 hover:bg-muted rounded-lg"><Trash2 className="h-4 w-4" /></button>
               </div>
             </div>
           </div>
@@ -50,12 +52,15 @@ function AdminDepoimentos() {
       </div>
       {editing && (
         <div className="fixed inset-0 bg-black/40 grid place-items-center p-4 z-50" onClick={() => setEditing(null)}>
-          <div className="bg-background rounded-3xl p-8 w-full max-w-xl" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-background rounded-3xl p-6 sm:p-8 w-full max-w-xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-6"><h2 className="font-display text-2xl">Depoimento</h2><button onClick={() => setEditing(null)}><X className="h-5 w-5" /></button></div>
             <div className="grid gap-4">
               <F label="Nome" value={editing.client_name} onChange={(v) => setEditing({ ...editing, client_name: v })} />
               <F label="Cidade" value={editing.city ?? ""} onChange={(v) => setEditing({ ...editing, city: v })} />
-              <F label="Foto (URL)" value={editing.photo_url ?? ""} onChange={(v) => setEditing({ ...editing, photo_url: v })} />
+              <div>
+                <label className="text-xs uppercase tracking-widest text-muted-foreground mb-1.5 block">Foto do cliente</label>
+                <ImageUpload value={editing.photo_url ?? ""} onChange={(url) => setEditing({ ...editing, photo_url: url })} folder="testimonials" />
+              </div>
               <div className="grid grid-cols-2 gap-4">
                 <F label="Avaliação (1-5)" type="number" value={String(editing.rating)} onChange={(v) => setEditing({ ...editing, rating: Math.max(1, Math.min(5, Number(v))) })} />
                 <F label="Ordem" type="number" value={String(editing.sort_order)} onChange={(v) => setEditing({ ...editing, sort_order: Number(v) })} />
