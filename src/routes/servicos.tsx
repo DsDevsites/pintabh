@@ -31,7 +31,7 @@ function ServicosPage() {
               <article key={s.id} className="rounded-3xl bg-background ring-1 ring-border overflow-hidden flex flex-col">
                 <div className="aspect-[16/10] overflow-hidden bg-muted">
                   {s.image_url ? (
-                    <img src={s.image_url} alt={s.title} className="h-full w-full object-cover" />
+                    <img src={s.image_url} alt={s.title} className="h-full w-full object-cover" loading="lazy" decoding="async" />
                   ) : (
                     <div className="h-full w-full" style={{ background: "linear-gradient(135deg, oklch(0.97 0 0), oklch(0.92 0 0))" }} />
                   )}
