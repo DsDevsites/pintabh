@@ -54,7 +54,7 @@ function ProjectPage() {
         {project.cover_image_url && (
           <div className="mx-auto max-w-6xl px-6 lg:px-10 mt-12">
             <div className="aspect-[16/9] rounded-3xl overflow-hidden ring-1 ring-border">
-              <img src={project.cover_image_url} alt={project.title} className="h-full w-full object-cover" />
+              <img src={project.cover_image_url} alt={project.title} className="h-full w-full object-cover" fetchPriority="high" decoding="async" />
             </div>
           </div>
         )}
@@ -62,7 +62,7 @@ function ProjectPage() {
           <div className="mx-auto max-w-6xl px-6 lg:px-10 mt-6 grid sm:grid-cols-2 gap-6">
             {images.map((img) => (
               <figure key={img.id} className="rounded-3xl overflow-hidden ring-1 ring-border">
-                <img src={img.image_url} alt={img.caption ?? ""} className="w-full h-full object-cover aspect-[4/3]" />
+                <img src={img.image_url} alt={img.caption ?? ""} className="w-full h-full object-cover aspect-[4/3]" loading="lazy" decoding="async" />
                 {img.caption && <figcaption className="p-4 text-sm text-muted-foreground">{img.caption}</figcaption>}
               </figure>
             ))}
