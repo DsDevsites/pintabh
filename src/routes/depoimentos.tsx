@@ -33,7 +33,7 @@ function DepoimentosPage() {
                 <p className="text-foreground leading-relaxed mb-6 text-lg">"{t.comment}"</p>
                 <div className="flex items-center gap-3">
                   {t.photo_url ? (
-                    <img src={t.photo_url} alt="" className="h-10 w-10 rounded-full object-cover" />
+                    <img src={t.photo_url} alt="" className="h-10 w-10 rounded-full object-cover" loading="lazy" decoding="async" />
                   ) : (
                     <div className="h-10 w-10 rounded-full bg-muted grid place-items-center text-sm font-medium">
                       {t.client_name.charAt(0)}
