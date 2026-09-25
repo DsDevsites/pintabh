@@ -71,7 +71,7 @@ function SobrePage() {
         <div className="mx-auto max-w-7xl px-6 lg:px-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {["1565182999561-18d7dc61c393","1604014237800-1c9102c219da","1505691938895-1758d7feb511"].map((id) => (
             <div key={id} className="aspect-square rounded-3xl overflow-hidden ring-1 ring-border">
-              <img src={`https://images.unsplash.com/photo-${id}?w=800&q=80`} alt="" className="h-full w-full object-cover" />
+              <img src={`https://images.unsplash.com/photo-${id}?w=800&q=80`} alt="" className="h-full w-full object-cover" loading="lazy" decoding="async" />
             </div>
           ))}
         </div>
