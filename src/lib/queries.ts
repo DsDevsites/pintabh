@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 export const settingsQuery = queryOptions({
   queryKey: ["site_settings"],
+  staleTime: 5 * 60 * 1000,
   queryFn: async () => {
     const { data, error } = await supabase.from("site_settings").select("*").eq("id", 1).single();
     if (error) throw error;
@@ -12,6 +13,7 @@ export const settingsQuery = queryOptions({
 
 export const servicesQuery = queryOptions({
   queryKey: ["services"],
+  staleTime: 5 * 60 * 1000,
   queryFn: async () => {
     const { data, error } = await supabase
       .from("services")
@@ -25,6 +27,7 @@ export const servicesQuery = queryOptions({
 
 export const projectsQuery = queryOptions({
   queryKey: ["projects"],
+  staleTime: 5 * 60 * 1000,
   queryFn: async () => {
     const { data, error } = await supabase
       .from("projects")
@@ -37,6 +40,7 @@ export const projectsQuery = queryOptions({
 
 export const featuredProjectsQuery = queryOptions({
   queryKey: ["projects", "featured"],
+  staleTime: 5 * 60 * 1000,
   queryFn: async () => {
     const { data, error } = await supabase
       .from("projects")
@@ -52,6 +56,7 @@ export const featuredProjectsQuery = queryOptions({
 export const projectBySlugQuery = (slug: string) =>
   queryOptions({
     queryKey: ["project", slug],
+    staleTime: 5 * 60 * 1000,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("projects")
@@ -65,6 +70,7 @@ export const projectBySlugQuery = (slug: string) =>
 
 export const testimonialsQuery = queryOptions({
   queryKey: ["testimonials"],
+  staleTime: 5 * 60 * 1000,
   queryFn: async () => {
     const { data, error } = await supabase
       .from("testimonials")
