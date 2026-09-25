@@ -46,7 +46,7 @@ function PortfolioPage() {
             {filtered?.map((p) => (
               <Link key={p.id} to="/portfolio/$slug" params={{ slug: p.slug }} className="group rounded-3xl overflow-hidden ring-1 ring-border bg-background">
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img src={p.cover_image_url ?? ""} alt={p.title} className="h-full w-full object-cover group-hover:scale-105 transition duration-700" />
+                  <img src={p.cover_image_url ?? ""} alt={p.title} className="h-full w-full object-cover group-hover:scale-105 transition duration-700" loading="lazy" decoding="async" />
                 </div>
                 <div className="p-6">
                   <div className="text-xs uppercase tracking-widest text-muted-foreground mb-2">{p.category}</div>
