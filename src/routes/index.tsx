@@ -80,6 +80,8 @@ function Index() {
                 src={s?.hero_image_url || "https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=1200&q=80"}
                 alt="Pintura profissional"
                 className="h-full w-full object-cover"
+                fetchPriority="high"
+                decoding="async"
               />
             </div>
             <div className="absolute -bottom-6 -left-6 bg-background rounded-2xl shadow-xl ring-1 ring-border p-5 max-w-xs hidden sm:block">
@@ -89,7 +91,7 @@ function Index() {
               <p className="text-sm text-foreground">"Resultado impecável e prazo cumprido."</p>
               <p className="text-xs text-muted-foreground mt-2">— Cliente residencial</p>
             </div>
-            <img src={logoAsset.url} alt="" className="absolute -top-6 -right-6 h-24 w-24 rounded-full ring-4 ring-background shadow-lg" />
+            <img src={logoAsset.url} alt="" className="absolute -top-6 -right-6 h-24 w-24 rounded-full ring-4 ring-background shadow-lg" decoding="async" />
           </div>
         </div>
         <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
@@ -136,7 +138,7 @@ function Index() {
                 className="group rounded-3xl overflow-hidden ring-1 ring-border bg-background"
               >
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img src={p.cover_image_url ?? ""} alt={p.title} className="h-full w-full object-cover group-hover:scale-105 transition duration-700" />
+                  <img src={p.cover_image_url ?? ""} alt={p.title} className="h-full w-full object-cover group-hover:scale-105 transition duration-700" loading="lazy" decoding="async" />
                 </div>
                 <div className="p-6">
                   <div className="text-xs uppercase tracking-widest text-muted-foreground mb-2">{p.category}</div>
