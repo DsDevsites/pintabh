@@ -80,9 +80,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "PintarBH — Pintura Profissional em Belo Horizonte" },
       { name: "description", content: "Empresa especializada em pintura residencial, comercial e industrial em BH. Orçamento sem compromisso." },
       { name: "author", content: "PintarBH" },
+      { name: "robots", content: "index, follow" },
       { property: "og:title", content: "PintarBH — Pintura Profissional em Belo Horizonte" },
       { property: "og:description", content: "Empresa especializada em pintura residencial, comercial e industrial em BH. Orçamento sem compromisso." },
       { property: "og:type", content: "website" },
+      { property: "og:locale", content: "pt_BR" },
+      { property: "og:site_name", content: "PintarBH" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:title", content: "PintarBH — Pintura Profissional em Belo Horizonte" },
       { name: "twitter:description", content: "Empresa especializada em pintura residencial, comercial e industrial em BH. Orçamento sem compromisso." },
@@ -107,7 +110,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <head>
         <HeadContent />
       </head>
