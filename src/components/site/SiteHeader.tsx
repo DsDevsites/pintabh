@@ -72,7 +72,7 @@ export function SiteHeader() {
               </Link>
             ))}
             <Link
-              to="/contato"
+              to="/orcamento"
               onClick={() => setOpen(false)}
               className="mt-2 inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground"
             >
