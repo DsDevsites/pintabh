@@ -1,6 +1,6 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { LayoutDashboard, Settings, Wrench, Image as ImageIcon, MessageSquare, Star, LogOut, Menu, X, Users } from "lucide-react";
+import { LayoutDashboard, Settings, Wrench, Image as ImageIcon, MessageSquare, Star, LogOut, Menu, X, Users, FileText } from "lucide-react";
 import { useState } from "react";
 import { RainbowStrip } from "@/components/site/RainbowStrip";
 import logoAsset from "@/assets/pintarbh-logo.png.asset.json";
@@ -15,6 +15,7 @@ const nav: NavItem[] = [
   { to: "/admin/projetos", label: "Projetos", icon: ImageIcon },
   { to: "/admin/depoimentos", label: "Depoimentos", icon: Star },
   { to: "/admin/contatos", label: "Contatos", icon: MessageSquare },
+  { to: "/admin/orcamentos", label: "Orçamentos", icon: FileText },
   { to: "/admin/usuarios", label: "Usuários", icon: Users },
   { to: "/admin/configuracoes", label: "Configurações", icon: Settings },
 ];
