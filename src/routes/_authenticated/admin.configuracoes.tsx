@@ -17,7 +17,7 @@ function AdminConfig() {
   useEffect(() => { if (data) setForm(Object.fromEntries(Object.entries(data).map(([k, v]) => [k, v == null ? "" : String(v)]))); }, [data]);
   const save = useMutation({
     mutationFn: async () => {
-      const payload = { ...form };
+      const payload = { ...form, company_name: "PintarBH" };
       delete payload.id; delete payload.updated_at;
       const cleaned = Object.fromEntries(Object.entries(payload).map(([k, v]) => [k, v === "" ? null : v]));
       const { error } = await supabase.from("site_settings").update(cleaned as never).eq("id", 1);
@@ -29,7 +29,7 @@ function AdminConfig() {
 
   const groups: { title: string; fields: { key: string; label: string; type?: string }[] }[] = [
     { title: "Identidade", fields: [
-      { key: "company_name", label: "Nome da empresa" },
+      { key: "company_name", label: "Nome da empresa (fixo)" },
       { key: "slogan", label: "Slogan" },
       { key: "logo_url", label: "Logo principal", type: "image" },
       { key: "logo_secondary_url", label: "Logo secundária", type: "image" },
@@ -94,7 +94,7 @@ function AdminConfig() {
                   ) : f.type === "textarea" ? (
                     <textarea rows={3} value={form[f.key] ?? ""} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} className="w-full rounded-xl border border-border px-4 py-3 text-sm" />
                   ) : (
-                    <input value={form[f.key] ?? ""} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} className="w-full rounded-xl border border-border px-4 py-3 text-sm" />
+                    <input value={f.key === "company_name" ? "PintarBH" : (form[f.key] ?? "")} readOnly={f.key === "company_name"} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} className={`w-full rounded-xl border border-border px-4 py-3 text-sm ${f.key === "company_name" ? "bg-muted cursor-not-allowed" : ""}`} />
                   )}
                 </div>
               ))}
