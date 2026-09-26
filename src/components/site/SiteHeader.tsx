@@ -19,7 +19,7 @@ export function SiteHeader() {
   const { data: settings } = useQuery(settingsQuery);
   const [open, setOpen] = useState(false);
   const logo = settings?.logo_url || logoAsset.url;
-  const name = settings?.company_name || "PintarBH";
+  const name = "PintarBH";
 
   return (
     <header className="sticky top-0 z-50 bg-background/85 backdrop-blur-md border-b border-border/60">
@@ -44,7 +44,7 @@ export function SiteHeader() {
         </nav>
         <div className="hidden lg:block">
           <Link
-            to="/contato"
+            to="/orcamento"
             className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 transition"
           >
             Solicitar orçamento
