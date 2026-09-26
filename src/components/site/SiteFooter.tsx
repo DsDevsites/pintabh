@@ -9,6 +9,7 @@ export function SiteFooter() {
   const { data: s } = useQuery(settingsQuery);
   const logo = s?.logo_url || logoAsset.url;
   const wpp = s?.whatsapp || "5531999999999";
+  const brand = "PintarBH";
   return (
     <footer className="mt-24 border-t border-border bg-background">
       <RainbowStrip />
@@ -16,7 +17,7 @@ export function SiteFooter() {
         <div className="md:col-span-1">
           <div className="flex items-center gap-3 mb-4">
             <img src={logo} alt="" className="h-10 w-10 rounded-full ring-1 ring-border" />
-            <span className="font-display text-lg">{s?.company_name || "PintarBH"}</span>
+            <span className="font-display text-lg">{brand}</span>
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">{s?.slogan}</p>
         </div>
@@ -61,7 +62,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-border">
         <div className="mx-auto max-w-7xl px-6 lg:px-10 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
-          <span>© {new Date().getFullYear()} {s?.company_name || "PintarBH"}. Todos os direitos reservados.</span>
+          <span>© {new Date().getFullYear()} {brand}. Todos os direitos reservados.</span>
           <Link
   to="/auth"
   className="opacity-50 hover:opacity-100 transition-all duration-300"
