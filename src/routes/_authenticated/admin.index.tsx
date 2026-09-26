@@ -11,13 +11,14 @@ function Dashboard() {
   const { data: stats } = useQuery({
     queryKey: ["admin", "stats"],
     queryFn: async () => {
-      const [s, p, t, m] = await Promise.all([
+      const [s, p, t, m, q] = await Promise.all([
         supabase.from("services").select("id", { count: "exact", head: true }),
         supabase.from("projects").select("id", { count: "exact", head: true }),
         supabase.from("testimonials").select("id", { count: "exact", head: true }),
         supabase.from("contact_messages").select("id", { count: "exact", head: true }).eq("status", "novo"),
+        supabase.from("quotes").select("id", { count: "exact", head: true }).eq("status", "pre_orcamento"),
       ]);
-      return { services: s.count ?? 0, projects: p.count ?? 0, testimonials: t.count ?? 0, newMessages: m.count ?? 0 };
+      return { services: s.count ?? 0, projects: p.count ?? 0, testimonials: t.count ?? 0, newMessages: m.count ?? 0, newQuotes: q.count ?? 0 };
     },
   });
   const cards = [
@@ -25,6 +26,7 @@ function Dashboard() {
     { label: "Projetos", value: stats?.projects ?? 0 },
     { label: "Depoimentos", value: stats?.testimonials ?? 0 },
     { label: "Mensagens novas", value: stats?.newMessages ?? 0 },
+    { label: "Pré-orçamentos", value: stats?.newQuotes ?? 0 },
   ];
   return (
     <AdminLayout title="Dashboard">
