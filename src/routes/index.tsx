@@ -28,51 +28,32 @@ function Index() {
 
   return (
     <PublicLayout>
-      {/* HERO */}
       <section className="relative overflow-hidden">
         <div className="mx-auto max-w-7xl px-6 lg:px-10 pt-16 pb-24 lg:pt-24 lg:pb-32 grid lg:grid-cols-2 gap-12 items-center">
           <div className="animate-fade-up">
             <div className="inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs text-muted-foreground mb-6">
-              <span className="h-1.5 w-1.5 rounded-full bg-foreground" />
-              Pintura profissional em Belo Horizonte
+              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+              Pintura e acabamentos em BH
             </div>
-            <h1 className="font-display text-5xl lg:text-7xl leading-[1.05] tracking-tight">
-              {s?.hero_title || "Cores que transformam ambientes"}
-            </h1>
+            <h1 className="font-display text-5xl lg:text-7xl leading-[1.05] tracking-tight">PintarBH</h1>
             <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
-              {s?.hero_subtitle}
+              Apês e apezinhos.<br />
+              Casas, casinhas.<br />
+              Paredes e paredinhas.
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
-              <Link
-                to="/contato"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:opacity-90 transition"
-              >
+              <Link to="/orcamento" className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:opacity-90 transition">
                 Solicitar orçamento <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link
-                to="/portfolio"
-                className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium hover:bg-muted transition"
-              >
+              <Link to="/portfolio" className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium hover:bg-muted transition">
                 Ver trabalhos
               </Link>
             </div>
-           <div className="mt-12 flex items-center gap-8 text-sm text-muted-foreground">
-  <div>
-    <div className="text-2xl text-foreground font-bold font-sans">
-      +500
-    </div>
-    projetos entregues
-  </div>
-
-  <div className="h-10 w-px bg-border" />
-
-  <div>
-    <div className="text-2xl text-foreground font-bold font-sans">
-  15 anos
-</div>
-    de experiência
-  </div>
-</div>
+            <div className="mt-12 flex items-center gap-8 text-sm text-muted-foreground">
+              <div><div className="text-2xl text-foreground font-bold font-sans">+500</div>projetos entregues</div>
+              <div className="h-10 w-px bg-border" />
+              <div><div className="text-2xl text-foreground font-bold font-sans">15 anos</div>de experiência</div>
+            </div>
           </div>
           <div className="relative">
             <div className="aspect-[4/5] rounded-3xl overflow-hidden ring-1 ring-border shadow-xl">
@@ -85,19 +66,18 @@ function Index() {
               />
             </div>
             <div className="absolute -bottom-6 -left-6 bg-background rounded-2xl shadow-xl ring-1 ring-border p-5 max-w-xs hidden sm:block">
-              <div className="flex items-center gap-1 text-yellow-500 mb-2">
+              <div className="flex items-center gap-1 text-primary mb-2">
                 {Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}
               </div>
               <p className="text-sm text-foreground">"Resultado impecável e prazo cumprido."</p>
               <p className="text-xs text-muted-foreground mt-2">— Cliente residencial</p>
             </div>
-            <img src={logoAsset.url} alt="" className="absolute -top-6 -right-6 h-24 w-24 rounded-full ring-4 ring-background shadow-lg" decoding="async" />
+            <img src={logoAsset.url} alt="PintarBH" className="absolute -top-6 -right-6 h-24 w-24 rounded-full ring-4 ring-background shadow-lg" decoding="async" />
           </div>
         </div>
         <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       </section>
 
-      {/* SERVICES */}
       <section className="py-24 bg-muted/40">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="flex items-end justify-between mb-14 flex-wrap gap-4">
@@ -119,7 +99,6 @@ function Index() {
         </div>
       </section>
 
-      {/* RECENT WORK */}
       <section className="py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="flex items-end justify-between mb-14 flex-wrap gap-4">
@@ -131,12 +110,7 @@ function Index() {
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             {projects?.map((p) => (
-              <Link
-                key={p.id}
-                to="/portfolio/$slug"
-                params={{ slug: p.slug }}
-                className="group rounded-3xl overflow-hidden ring-1 ring-border bg-background"
-              >
+              <Link key={p.id} to="/portfolio/$slug" params={{ slug: p.slug }} className="group rounded-3xl overflow-hidden ring-1 ring-border bg-background">
                 <div className="aspect-[4/3] overflow-hidden">
                   <img src={p.cover_image_url ?? ""} alt={p.title} className="h-full w-full object-cover group-hover:scale-105 transition duration-700" loading="lazy" decoding="async" />
                 </div>
@@ -151,7 +125,6 @@ function Index() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
       <section className="py-24 bg-muted/40">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground mb-3 text-center">Depoimentos</p>
@@ -159,21 +132,17 @@ function Index() {
           <div className="grid md:grid-cols-3 gap-6">
             {testimonials?.slice(0, 3).map((t) => (
               <div key={t.id} className="rounded-3xl bg-background ring-1 ring-border p-8">
-                <div className="flex items-center gap-1 text-yellow-500 mb-4">
+                <div className="flex items-center gap-1 text-primary mb-4">
                   {Array.from({ length: t.rating }).map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}
                 </div>
                 <p className="text-foreground leading-relaxed mb-6">"{t.comment}"</p>
-                <div>
-                  <div className="font-medium">{t.client_name}</div>
-                  <div className="text-xs text-muted-foreground">{t.city}</div>
-                </div>
+                <div><div className="font-medium">{t.client_name}</div><div className="text-xs text-muted-foreground">{t.city}</div></div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-24">
         <div className="mx-auto max-w-5xl px-6 lg:px-10">
           <div className="rounded-3xl bg-primary text-primary-foreground p-12 lg:p-16 relative overflow-hidden">
@@ -181,7 +150,7 @@ function Index() {
             <h2 className="font-display text-4xl lg:text-5xl max-w-2xl">Pronto para transformar seu ambiente?</h2>
             <p className="mt-4 max-w-xl text-primary-foreground/80">Solicite um orçamento sem compromisso. Atendemos toda a região metropolitana de Belo Horizonte.</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/contato" className="inline-flex items-center gap-2 rounded-full bg-primary-foreground text-primary px-6 py-3 text-sm font-medium hover:opacity-90">
+              <Link to="/orcamento" className="inline-flex items-center gap-2 rounded-full bg-primary-foreground text-primary px-6 py-3 text-sm font-medium hover:opacity-90">
                 Falar conosco <ArrowRight className="h-4 w-4" />
               </Link>
               <a href={`https://wa.me/${s?.whatsapp || "5531999999999"}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/30 px-6 py-3 text-sm font-medium hover:bg-primary-foreground/10">
