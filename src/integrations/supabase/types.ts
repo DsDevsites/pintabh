@@ -53,6 +53,66 @@ export type Database = {
         }
         Relationships: []
       }
+      quotes: {
+        Row: {
+          id: string
+          client_name: string
+          phone: string | null
+          email: string | null
+          address: string | null
+          project_title: string | null
+          service_description: string | null
+          services: Json
+          materials: Json
+          labor_total: number
+          material_total: number
+          total: number
+          payment_terms: string | null
+          notes: string | null
+          status: Database["public"]["Enums"]["quote_status"]
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          client_name: string
+          phone?: string | null
+          email?: string | null
+          address?: string | null
+          project_title?: string | null
+          service_description?: string | null
+          services?: Json
+          materials?: Json
+          labor_total?: number
+          material_total?: number
+          total?: number
+          payment_terms?: string | null
+          notes?: string | null
+          status?: Database["public"]["Enums"]["quote_status"]
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          client_name?: string
+          phone?: string | null
+          email?: string | null
+          address?: string | null
+          project_title?: string | null
+          service_description?: string | null
+          services?: Json
+          materials?: Json
+          labor_total?: number
+          material_total?: number
+          total?: number
+          payment_terms?: string | null
+          notes?: string | null
+          status?: Database["public"]["Enums"]["quote_status"]
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -374,6 +434,7 @@ export type Database = {
     Enums: {
       app_role: "admin" | "editor"
       contact_status: "novo" | "em_andamento" | "finalizado"
+      quote_status: "pre_orcamento" | "em_analise" | "finalizado"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -503,6 +564,7 @@ export const Constants = {
     Enums: {
       app_role: ["admin", "editor"],
       contact_status: ["novo", "em_andamento", "finalizado"],
+      quote_status: ["pre_orcamento", "em_analise", "finalizado"],
     },
   },
 } as const
